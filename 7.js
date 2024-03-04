@@ -2,33 +2,48 @@
 
 // Клас Participant представляє користувача, який може відправляти повідомлення.
 class Participant {
-  // Конструктор приймає два параметри: alias, communicator
-  // Метод dispatchMessage відправляє повідомлення за допомогою відповідного засобу комунікації.
-  // Він приймає один параметр - text - текст повідомлення, яке потрібно відправити.
-  // Метод prepareMessage приймає text та повертає  `[${this.alias}]: ${text}`
+  constructor(alias, communicator) {
+    this.alias = alias; // Псевдонім користувача
+    this.communicator = communicator; // Засіб комунікації
+  }
+
+  // Метод для відправлення повідомлення
+  dispatchMessage(text) {
+    const message = this.prepareMessage(text); // Підготовка повідомлення
+    this.communicator.transmit(message); // Відправлення повідомлення за допомогою засобу комунікації
+  }
+
+  // Метод для підготовки повідомлення
+  prepareMessage(text) {
+    return `[${this.alias}]: ${text}`; // Форматування тексту повідомлення
+  }
 }
 
 // Клас SMSCommunicator відповідає за відправку повідомлень через SMS.
 class SMSCommunicator {
-  // Статичний метод transmit відправляє SMS.
-  // Він приймає один параметр - message - текст повідомлення, яке потрібно відправити, та виводимо в консоль `Відправлено SMS: ${message}`.
+  // Статичний метод для відправлення SMS
+  static transmit(message) {
+    console.log(`Відправлено SMS: ${message}`); // Вивід інформації про відправлене SMS
+  }
 }
 
 // Клас EmailCommunicator відповідає за відправку повідомлень через Email.
 class EmailCommunicator {
-  // Статичний метод transmit відправляє Email.
-  // Він приймає один параметр - message - текст повідомлення, яке потрібно відправити та виводимо в консоль `Відправлено Email: ${message}`.
+  // Статичний метод для відправлення Email
+  static transmit(message) {
+    console.log(`Відправлено Email: ${message}`); // Вивід інформації про відправлене Email
+  }
 }
 
 console.log("Завдання 7 ====================================");
 // Після виконання розкоментуйте код нижче
 
 // Створюємо двох користувачів - Max та Linda - які відправляють повідомлення за допомогою різних засобів комунікації.
-// const max = new Participant("Max", SMSCommunicator);
-// const linda = new Participant("Linda", EmailCommunicator);
+const max = new Participant("Max", SMSCommunicator);
+const linda = new Participant("Linda", EmailCommunicator);
 
 // Max відправляє повідомлення через SMS.
-// max.dispatchMessage("Hello!"); // Виведе: Відправлено SMS: [Max]: Hello!
+max.dispatchMessage("Hello!"); // Виведе: Відправлено SMS: [Max]: Hello!
 
 // Linda відправляє повідомлення через Email.
-// linda.dispatchMessage("Hello!"); // Виведе: Відправлено Email: [Linda]: Hello!
+linda.dispatchMessage("Hello!"); // Виведе: Відправлено Email: [Linda]: Hello!
